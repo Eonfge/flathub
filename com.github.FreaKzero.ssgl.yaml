@@ -92,7 +92,7 @@ modules:
   - type: file
     path: ssgl.png
   build-commands:
-  #- install unpackLauncher /app/bin
+  - install unpackLauncher /app/bin
   - cp /usr/bin/ar /app/bin
   - install -Dm 644 com.github.FreaKzero.ssgl.desktop -t /app/share/applications
   - install -Dm 644 com.github.FreaKzero.ssgl.appdata.xml -t /app/share/appdata
