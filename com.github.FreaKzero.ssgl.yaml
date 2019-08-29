@@ -1,0 +1,102 @@
+app-id: com.github.FreaKzero.ssgl
+runtime: org.freedesktop.Platform
+sdk: org.freedesktop.Sdk
+runtime-version: "18.08"
+command: SSGL
+rename-icon: ssgl
+finish-args:
+- --device=dri
+- --socket=wayland
+- --socket=fallback-x11
+- --socket=x11
+- --share=ipc
+- --socket=pulseaudio
+- --env=DOOMWADDIR=/app/share/games/doom
+- --persist=.config/gzdoom
+cleanup:
+- /app/include
+- /app/lib/*.a
+- /app/lib/*.la
+- /app/lib/pkgconfig
+modules:
+- name: ncurses
+  no-autogen: true
+  config-opts:
+  - --prefix=/app
+  make-install-args:
+  - install.libs
+  cleanup:
+  - /bin
+  - /include
+  - /share/man
+  - "/lib/*.a"
+  - "/lib/*.la"
+  sources:
+  - type: archive
+    url: http://ftp.gnu.org/gnu/ncurses/ncurses-6.1.tar.gz
+    sha256: aa057eeeb4a14d470101eff4597d5833dcef5965331be3528c08d99cebaa0d17
+
+- name: fluidsynth
+  buildsystem: cmake-ninja
+  config-opts:
+  - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+  - -DLIB_SUFFIX=
+  - -DCMAKE_EXE_LINKER_FLAGS=-lncurses # https://lists.nongnu.org/archive/html/fluid-dev/2010-10/msg00057.html
+  - -DCMAKE_SHARED_LINKER_FLAGS=-lncurses
+  sources:
+  - type: archive
+    url: https://github.com/FluidSynth/fluidsynth/archive/v1.1.11.tar.gz
+    sha256: da8878ff374d12392eecf87e96bad8711b8e76a154c25a571dd8614d1af80de8
+
+- name: gzdoom
+  buildsystem: cmake-ninja
+  config-opts:
+  - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+  - -DSEND_ANON_STATS=OFF
+  - -DCMAKE_CXX_FLAGS="-msse3" # Required when targeting 32-bit x86
+  sources:
+  - type: archive
+    url: https://github.com/coelckers/gzdoom/archive/g4.2.0.tar.gz
+    sha256: 9d781e868f32ad53aa262691f76cab09b12661ababd2b7f5735fe852ab74d566
+  - type: file
+    url: https://github.com/coelckers/gzdoom/raw/g4.2.0/soundfont/gzdoom.sf2
+    sha256: fca3e514b635a21789d4224e84865d2954a2a914d46b64aa8219ddb565c44869
+  - type: shell
+    commands:
+    - install -Dm 644 gzdoom.sf2 /app/share/sounds/sf2/gzdoom.sf2
+  - type: script
+    commands:
+    - gzdoom +fluid_patchset /app/share/sounds/sf2/gzdoom.sf2 $@
+    dest-filename: gzdoom.sh
+  post-install:
+  - install -D gzdoom.sh /app/bin/gzdoom.sh
+
+- name: ssgl
+  buildsystem: simple
+  sources:
+  - type: extra-data
+    filename: ssgl.tar.gz
+    url: https://github.com/FreaKzero/ssgl-doom-launcher/releases/download/v1.1.1/linux64.tar.gz
+    sha256: fb9e3109fa80953b13d9f77db383df12955c8e0d994a743e9e5249beb1c9e2de
+    size: 42376364
+  - type: script
+    dest-filename: unpackLauncher
+    commands:
+    - tar -xzf ssgl.tar.gz
+    - mv linux64/* .
+    - mkdir export/share/applications
+  - type: file
+    path: com.github.FreaKzero.ssgl.desktop
+  - type: file
+    path: com.github.FreaKzero.ssgl.appdata.xml
+  - type: file
+    path: ssgl.png
+  build-commands:
+  #- install unpackLauncher /app/bin
+  - cp /usr/bin/ar /app/bin
+  - install -Dm 644 com.github.FreaKzero.ssgl.desktop -t /app/share/applications
+  - install -Dm 644 com.github.FreaKzero.ssgl.appdata.xml -t /app/share/appdata
+  - install -Dm 644 ssgl.png /app/share/icons/hicolor/48x48/apps/ssgl.png
+  - install -Dm 644 ssgl.png /app/share/icons/hicolor/64x64/apps/ssgl.png
+  - install -Dm 644 ssgl.png /app/share/icons/hicolor/128x128/apps/ssgl.png
+

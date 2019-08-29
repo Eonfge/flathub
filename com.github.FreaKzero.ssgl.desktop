@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Games;
+Comment=Multi-game launcher for Doom era games
+Exec=ssgl
+Icon=ssgl.png
+Name=SSGL
+StartupNotify=true
+Terminal=false
+Type=Application
+Keywords=Doom;Heretic;Hexen;
