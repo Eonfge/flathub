@@ -1,9 +1,10 @@
 app-id: com.github.FreaKzero.ssgl
-runtime: org.freedesktop.Platform
-sdk: org.freedesktop.Sdk
-runtime-version: "18.08"
+runtime: org.gnome.Platform
+sdk: org.gnome.Sdk
+runtime-version: "3.32"
 command: SSGL
 rename-icon: ssgl
+
 finish-args:
 - --device=dri
 - --socket=wayland
@@ -11,14 +12,50 @@ finish-args:
 - --socket=x11
 - --share=ipc
 - --socket=pulseaudio
+
+# For SSGL
+- --talk-name=org.gnome.GConf
+- --filesystem=xdg-run/dconf
+- --filesystem=~/.config/dconf:ro
+- --talk-name=ca.desrt.dconf
+- --env=DCONF_USER_CONFIG_DIR=.config/dconf
+
+# Based on game data packager
 - --env=DOOMWADDIR=/app/share/games/doom
+
+#based on GZDoom
 - --persist=.config/gzdoom
+
 cleanup:
 - /app/include
 - /app/lib/*.a
 - /app/lib/*.la
 - /app/lib/pkgconfig
+
+add-extensions:
+  org.freedesktop.Platform.Compat.i386:
+    directory: lib/i386-linux-gnu
+    version: '18.08'
+
+  org.freedesktop.Platform.Compat.i386.Debug:
+    directory: lib/debug/lib/i386-linux-gnu
+    version: '18.08'
+    no-autodownload: true
+
+  org.freedesktop.Platform.GL32:
+    directory: lib/i386-linux-gnu/GL
+    version: '1.4'
+    versions: 18.08;1.4
+    subdirectories: true
+    no-autodownload: true
+    autodelete: false
+    add-ld-path: lib
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d
+    download-if: active-gl-driver
+    enable-if: active-gl-driver
+
 modules:
+
 - name: ncurses
   no-autogen: true
   config-opts:
@@ -70,6 +107,20 @@ modules:
     dest-filename: gzdoom.sh
   post-install:
   - install -D gzdoom.sh /app/bin/gzdoom.sh
+
+- name: gconf
+  cleanup:
+  - /bin
+  - /share/local
+  config-opts:
+  - --disable-static
+  - --disable-gtk-doc
+  - --disable-orbit
+  - --disable-introspection
+  sources:
+  - type: archive
+    url: https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz
+    sha256: 1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c
 
 - name: ssgl
   buildsystem: simple
