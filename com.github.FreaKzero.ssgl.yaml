@@ -74,17 +74,22 @@ modules:
 - name: ssgl
   buildsystem: simple
   sources:
-  - type: extra-data
-    filename: ssgl.tar.gz
+  - type: archive
+    dest-filename: ssgl.tar.gz
     url: https://github.com/FreaKzero/ssgl-doom-launcher/releases/download/v1.1.1/linux64.tar.gz
     sha256: fb9e3109fa80953b13d9f77db383df12955c8e0d994a743e9e5249beb1c9e2de
-    size: 42376364
-  - type: script
-    dest-filename: unpackLauncher
-    commands:
-    - tar -xzf ssgl.tar.gz
-    - mv linux64/* .
-    - mkdir export/share/applications
+    strip-components: 0
+#    size: 42376364
+    only-arches:
+    - x86_64
+  - type: archive
+    dest-filename: ssgl.tar.gz
+    url: https://github.com/FreaKzero/ssgl-doom-launcher/releases/download/v1.1.1/linux32.tar.gz
+    sha256: 43a413b7765269ada2861beb46cc70bf5882e7666017a58aad93d2b847f2df58
+    strip-components: 0
+#    size: 44287842
+    only-arches:
+    - x86
   - type: file
     path: com.github.FreaKzero.ssgl.desktop
   - type: file
@@ -92,8 +97,8 @@ modules:
   - type: file
     path: ssgl.png
   build-commands:
-  - install unpackLauncher /app/bin
-  - cp /usr/bin/ar /app/bin
+  - ls -la
+  - install -D SSGL /app/bin/SSGL
   - install -Dm 644 com.github.FreaKzero.ssgl.desktop -t /app/share/applications
   - install -Dm 644 com.github.FreaKzero.ssgl.appdata.xml -t /app/share/appdata
   - install -Dm 644 ssgl.png /app/share/icons/hicolor/48x48/apps/ssgl.png
