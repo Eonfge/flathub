@@ -20,7 +20,7 @@ finish-args:
 - --talk-name=ca.desrt.dconf
 - --env=DCONF_USER_CONFIG_DIR=.config/dconf
 
-# Based on game data packager
+# Based on game data packager?
 - --env=DOOMWADDIR=/app/share/games/doom
 
 #based on GZDoom
@@ -32,29 +32,9 @@ cleanup:
 - /app/lib/*.la
 - /app/lib/pkgconfig
 
-add-extensions:
-  org.freedesktop.Platform.Compat.i386:
-    directory: lib/i386-linux-gnu
-    version: '18.08'
-
-  org.freedesktop.Platform.Compat.i386.Debug:
-    directory: lib/debug/lib/i386-linux-gnu
-    version: '18.08'
-    no-autodownload: true
-
-  org.freedesktop.Platform.GL32:
-    directory: lib/i386-linux-gnu/GL
-    version: '1.4'
-    versions: 18.08;1.4
-    subdirectories: true
-    no-autodownload: true
-    autodelete: false
-    add-ld-path: lib
-    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d
-    download-if: active-gl-driver
-    enable-if: active-gl-driver
-
 modules:
+
+- shared-modules/gtk2/gtk2.json
 
 - name: ncurses
   no-autogen: true
@@ -125,6 +105,10 @@ modules:
 - name: ssgl
   buildsystem: simple
   sources:
+  - type: script
+    dest-filename: run.sh
+    commands:
+    - SSGL --no-sandbox --verbose
   - type: archive
     dest-filename: ssgl.tar.gz
     url: https://github.com/FreaKzero/ssgl-doom-launcher/releases/download/v1.1.1/linux64.tar.gz
@@ -148,8 +132,13 @@ modules:
   - type: file
     path: ssgl.png
   build-commands:
-  - ls -la
+  - mkdir -p /app/bin/locales/
+  - mv locales/* /app/bin/locales/
+  - mv icudtl.dat /app/bin/
+  - mv libffmpegsumo.so /app/bin/
+  - mv nw.pak /app/bin/
   - install -D SSGL /app/bin/SSGL
+  - install -D run.sh /app/bin/run.sh
   - install -Dm 644 com.github.FreaKzero.ssgl.desktop -t /app/share/applications
   - install -Dm 644 com.github.FreaKzero.ssgl.appdata.xml -t /app/share/appdata
   - install -Dm 644 ssgl.png /app/share/icons/hicolor/48x48/apps/ssgl.png
