@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SPDX-License-Identifier: BSD-3-Clause -->
+<!-- Copyright 2019 Kevin Degeling -->
 
 <component type="desktop">
   <id>com.github.FreaKzero.ssgl</id>
   <name>SSGL</name>
   <summary>First-person shooter based on the Doom engine</summary>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>BSD-3-Clause</project_license>
+  <project_license>GPL-3.0-or-later</project_license>
   <developer_name>Kevin "Eonfge" Degeling</developer_name>
+
   <url type="homepage">https://freedoom.github.io/</url>
   <url type="bugtracker">https://github.com/freedoom/freedoom/issues</url>
+
+  <launchable type="desktop-id">com.github.FreaKzero.ssgl.desktop</launchable>
+
   <description>
     <p>
-      Freedoom: Phase 2 is a 32-level game, expanding upon Phase 1 and
-      adding a double-barrelled shotgun and more enemy types, along
-      with even more brutal gameplay to really test your limits.
+      Multi-game launcher for Doom era games. Be able to launch Doom, Doom 2,
+      Heretic, Hexen, and Strife all from the same launcher. There is mod and pwad
+      support, and it uses GZDoom on the backend to ensure maximum feature support.
     </p>
-    <p>
-      The Freedoom project aims to produce three base-game data files
-      (IWADs) for Doom-compatible engines.  With it comes the
-      capability to also play the wide range of mods created for Doom
-      by a vibrant community.  Freedoom: Phase 2 is fully compatible
-      with Doom II and Final Doom mods.
-    </p>
+    <ul>
+      <li>Painfree modern UI</li>
+      <li> Support for WAD, PK3, BEX and DEH</li>
+      <li>Easy Filtering through your Files (directory-names, mod-names, file extensions)</li>
+      <li>Loadorder sorting for chosen Files</li>
+      <li>Creating/Saving Modlists for faster access</li>
+      <li>Using/Creating Savefolders based on the name on used wadlist</li>
+      <li>SSGL automatically manages your savefolders via engine and Modlist Selection</li>
+      <li>TODO: Oblige "Build and Play" via configfiles (Also able to resume last built map)</li>
+      <li>TODO: Fast access to your favourite DoomSeeker Client and Oblige Frontend</li>
+      <li>Screenshot Lookup for your WADs and PK3s via WadArchive or local directory</li>
+    </ul>
   </description>
   <screenshots>
     <screenshot type="default">
