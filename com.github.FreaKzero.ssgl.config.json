@@ -37,7 +37,7 @@
             "rlmonsterswad": "",
             "vanilla": ""
         },
-        "preselectedengine": ""
+        "preselectedengine": "gzdoom"
     },
     "modlistpath": "/home/{USER}/.config/SSGL/mods/",
     "oblige": {
@@ -57,6 +57,6 @@
         "zandronum": "",
         "zdoom": ""
     },
-    "screenshotpath": "~/Pictures/",
+    "screenshotpath": "/home/{USER}/Pictures/",
     "wadpath": "/home/{USER}/.config/SSGL/pwads/"
 }
