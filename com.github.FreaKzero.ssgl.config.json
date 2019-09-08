@@ -1,0 +1,62 @@
+{
+    "active": {
+        "doom64ex": false,
+        "doomretro": false,
+        "doomrpg": false,
+        "doomrpgrl": false,
+        "doomrpgrlmonsters": false,
+        "gzdoom": true,
+        "oblige": false,
+        "prboomp": false,
+        "zandronum": false,
+        "zdoom": false
+    },
+    "dontShowUpdate": "1.1.1",
+    "engines": {
+        "doom64ex": "",
+        "doomretro": "",
+        "doomrpg": "",
+        "doomrpgrl": "",
+        "gzdoom": "/app/bin/gzdoom",
+        "prboomp": "",
+        "zandronum": "",
+        "zdoom": ""
+    },
+    "freshinstall": false,
+    "initList": false,
+    "iwadpath": "/home/kevin/.config/gzdoom/",
+    "misc": {
+        "doom64exsound": "",
+        "doomrpg": {
+            "brightmaps": "",
+            "extras": "",
+            "rlarsenalpath": "",
+            "rlarsenalwad": "",
+            "rlhudwad": "",
+            "rlmonsterspath": "",
+            "rlmonsterswad": "",
+            "vanilla": ""
+        },
+        "preselectedengine": ""
+    },
+    "modlistpath": "",
+    "oblige": {
+        "binary": "",
+        "configs": "",
+        "mappath": ""
+    },
+    "online": {
+        "client": ""
+    },
+    "savepaths": {
+        "doom64ex": "",
+        "doomretro": "",
+        "doomrpg": "",
+        "gzdoom": "/home/kevin/.config/gzdoom/",
+        "prboomp": "",
+        "zandronum": "",
+        "zdoom": ""
+    },
+    "screenshotpath": "~/Pictures/",
+    "wadpath": "/home/kevin/.config/gzdoom/"
+}
