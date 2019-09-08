@@ -24,7 +24,7 @@
     },
     "freshinstall": false,
     "initList": false,
-    "iwadpath": "/home/kevin/.config/SSGL/iwads/",
+    "iwadpath": "/home/{USER}/.config/SSGL/iwads/",
     "misc": {
         "doom64exsound": "",
         "doomrpg": {
@@ -39,7 +39,7 @@
         },
         "preselectedengine": ""
     },
-    "modlistpath": "/home/kevin/.config/SSGL/mods/",
+    "modlistpath": "/home/{USER}/.config/SSGL/mods/",
     "oblige": {
         "binary": "",
         "configs": "",
@@ -52,11 +52,11 @@
         "doom64ex": "",
         "doomretro": "",
         "doomrpg": "",
-        "gzdoom": "/home/kevin/.config/gzdoom/",
+        "gzdoom": "/home/{USER}/.config/gzdoom/",
         "prboomp": "",
         "zandronum": "",
         "zdoom": ""
     },
     "screenshotpath": "~/Pictures/",
-    "wadpath": "/home/kevin/.config/SSGL/pwads/"
+    "wadpath": "/home/{USER}/.config/SSGL/pwads/"
 }

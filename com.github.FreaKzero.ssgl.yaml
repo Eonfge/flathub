@@ -132,8 +132,10 @@ modules:
     path: ssgl.png
   - type: script
     commands:
-    #- cat /app/bin/config.json
+    - cp /app/bin/config.json /app/bin/config.json.backup
+    - sed -i "s/{USER}/"$USER"/g" /app/bin/config.json
     - /app/bin/SSGL
+    - cp /app/bin/config.json.backup /app/bin/config.json
     dest-filename: runSSGL.sh
   build-commands:
   - mkdir -p /app/bin/locales/
