@@ -15,16 +15,17 @@ finish-args:
 
 # For SSGL
 - --talk-name=org.gnome.GConf
-- --filesystem=xdg-run/dconf
-- --filesystem=~/.config/dconf:ro
-- --talk-name=ca.desrt.dconf
-- --env=DCONF_USER_CONFIG_DIR=.config/dconf
+#- --filesystem=xdg-run/dconf
+#- --filesystem=~/.config/dconf:ro
+#- --talk-name=ca.desrt.dconf
+#- --env=DCONF_USER_CONFIG_DIR=.config/dconf
 
 # Based on game data packager?
 - --env=DOOMWADDIR=/app/share/games/doom
 
 #based on GZDoom
 - --persist=.config/gzdoom
+- --persist=.config/SSGL
 
 cleanup:
 - /app/include
@@ -131,6 +132,7 @@ modules:
     path: ssgl.png
   - type: script
     commands:
+    #- cat /app/bin/config.json
     - /app/bin/SSGL
     dest-filename: runSSGL.sh
   build-commands:

@@ -24,7 +24,7 @@
     },
     "freshinstall": false,
     "initList": false,
-    "iwadpath": "/home/kevin/.config/gzdoom/",
+    "iwadpath": "/home/kevin/.config/SSGL/iwads/",
     "misc": {
         "doom64exsound": "",
         "doomrpg": {
@@ -39,7 +39,7 @@
         },
         "preselectedengine": ""
     },
-    "modlistpath": "",
+    "modlistpath": "/home/kevin/.config/SSGL/mods/",
     "oblige": {
         "binary": "",
         "configs": "",
@@ -58,5 +58,5 @@
         "zdoom": ""
     },
     "screenshotpath": "~/Pictures/",
-    "wadpath": "/home/kevin/.config/gzdoom/"
+    "wadpath": "/home/kevin/.config/SSGL/pwads/"
 }
