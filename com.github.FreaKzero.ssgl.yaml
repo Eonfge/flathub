@@ -20,10 +20,8 @@ finish-args:
 #- --talk-name=ca.desrt.dconf
 #- --env=DCONF_USER_CONFIG_DIR=.config/dconf
 
-# Based on game data packager?
-- --env=DOOMWADDIR=/app/share/games/doom
-
 #based on GZDoom
+- --env=DOOMWADDIR=/app/share/games/doom
 - --persist=.config/gzdoom
 - --persist=.config/SSGL
 
@@ -102,6 +100,25 @@ modules:
   - type: archive
     url: https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz
     sha256: 1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c
+
+- name: demos
+  buildsystem: simple
+  sources:
+  - type: archive
+    url: https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip
+    sha256: 28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a
+  - type: extra-data
+    filename: doom1.wad
+    url: http://distro.ibiblio.org/pub/linux/distributions/slitaz/sources/packages/d/doom1.wad
+    strip-components: 0
+    sha256: 1d7d43be501e67d927e415e0b8f3e29c3bf33075e859721816f652a526cac771
+    size: 4196020
+  build-commands:
+  - ls -la
+  - #install -Dm 644 freedoom2.wad /app/share/games/doom
+  - #install -Dm 644 freedoom1.wad /app/share/games/doom
+  - #install -Dm 644 doom1.wad /app/share/games/doom
+
 
 - name: ssgl
   buildsystem: simple
