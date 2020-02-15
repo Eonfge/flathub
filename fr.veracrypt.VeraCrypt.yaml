@@ -1,0 +1,91 @@
+app-id: fr.veracrypt.VeraCrypt
+runtime: org.gnome.Platform
+runtime-version: '3.34'
+sdk: org.gnome.Sdk
+branch: stable
+
+command: veracrypt
+
+finish-args:
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --socket=x11
+  - --share=ipc
+  - --share=network
+#  - --device=dri
+  - --device=all
+
+cleanup:
+  - /include
+  - /lib/cmake
+  - /lib/pkgconfig
+  - /share/gtk-doc
+  - /share/man
+  - /share/pkgconfig
+  - '*.a'
+  - '*.la'
+
+modules:
+
+# Module not needed, unless we use wxWidgets with opengl support
+#- shared-modules/glu/glu-9.json
+
+# Attempt at getting udev working
+- shared-modules/gudev/gudev.json
+
+- name: wxWidgets
+  rm-configure: true
+  config-opts:
+  - --with-gtk=3
+  - --disable-sdltest
+  - --enable-webkit
+  - --enable-webview
+  - --enable-webviewwebkit
+#  - --with-opengl
+  build-options:
+    cxxflags: -std=c++11
+  sources:
+  - type: archive
+    url: https://github.com/wxWidgets/wxWidgets/archive/v3.1.3.tar.gz
+    sha256: a5cb5ea326d76b5e472e9400933cef17c900d5c9b549e40eef00b64fe86d7cb0
+  - type: script
+    dest-filename: autogen.sh
+    commands:
+    - cp -p /usr/share/automake-*/config.{sub,guess}
+    - autoconf -f -B build/autoconf_prepend-include
+
+- name: yasm
+  sources:
+    - type: archive
+      url: http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
+      sha256: 3dce6601b495f5b3d45b59f7d2492a340ee7e84b5beca17e48f862502bd5603f
+
+# Does not compile because udev is not available
+# This also stops all changes off getting VeraCrypt in Flatpak:
+# No device access = no possiblity to encrypt disks
+- name: libfuse
+  buildsystem: meson
+  sources:
+    - type: archive
+      url: https://github.com/libfuse/libfuse/releases/download/fuse-3.9.0/fuse-3.9.0.tar.xz
+      sha256: fcb7079a1bb4e510377b427d1c5c37c349281d498e249ae0c2379b4cf50059c2
+
+- name: veracrypt
+  buildsystem: simple
+  build-commands:
+    - ls -la
+    - make
+    - make install
+  sources:
+    - type: archive
+      url: https://launchpad.net/veracrypt/trunk/1.24-update4/+download/VeraCrypt_1.24-Update4_Source.tar.bz2
+      sha256: 9d622bdd5c77ceec4de4c1e2c80cdafca93d420df5e1663f2c98260db6c0ee84
+
+- name: metadata
+  buildsystem: simple
+  build-commands:
+    - install -Dm644 fr.veracrypt.VeraCrypt.metainfo.xml /app/share/metainfo/fr.veracrypt.VeraCrypt.metainfo.xml
+  sources:
+    - type: file
+      path: fr.veracrypt.VeraCrypt.metainfo.xml
+

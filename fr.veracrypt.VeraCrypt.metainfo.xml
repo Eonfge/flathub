@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Kevin Degeling -->
+
+<component type="desktop-application">
+  <id>fr.veracrypt.VeraCrypt</id>
+  <name>VeraCrypt</name>
+  <summary>VeraCrypt is a free open source disk encryption software</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+
+  <developer_name>IDRIX</developer_name>
+  
+  <url type="homepage">https://www.veracrypt.fr/en/Home.html</url>
+
+  <launchable type="desktop-id">fr.veracrypt.VeraCrypt.desktop</launchable>
+
+  <description>
+    <p>VeraCrypt main features: </p>
+    <ul>
+      <li>Creates a virtual encrypted disk within a file and mounts it as a real disk.</li>
+      <li>EXTEND</li>
+    </ul>
+    <p>VeraCrypt is based on TrueCrypt 7.1a. Additional license restrictions do apply.</p>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.veracrypt.fr/en/Beginner's%20Tutorial_Image_002.jpg</image>
+      <caption>Base UI PLACEHOLDER</caption>
+    <screenshot/>
+  </screenshots>
+
+  <releases>
+    <release version="1.24.4" date="2020-01-23">
+      <description>
+        <p>First release of ET:Legacy on Flathub.</p>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1">
+  </content_rating>
+
+</component>
+
+
