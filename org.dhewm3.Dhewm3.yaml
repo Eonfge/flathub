@@ -19,6 +19,15 @@ cleanup:
   - /lib/pkgconfig
 
 modules:
+
+  - name: backtrace
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/ianlancetaylor/libbacktrace.git
+        branch: master
+        commit: d0f5e95a87a4d3e0a1ed6c069b5dae7cbab3ed2a
+
   - name: dhewm3
     buildsystem: cmake-ninja
     config-opts:
