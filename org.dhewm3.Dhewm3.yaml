@@ -25,9 +25,10 @@ modules:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DREPRODUCIBLE_BUILD=ON
     sources:
-      - type: archive
-        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.1.tar.gz
-        sha256: febaef022ff216435a2ff86f4e1526ac9bccbc401b03bed495a0a2f0b4edfb53
+      - type: git
+        url: https://github.com/dhewm/dhewm3
+        branch: master
+        commit: 8eb91c79cb87eac2dbf8bf0a6b43c40f88483c5e
       - type: shell
         commands:
           - mv ./neo/* ./
