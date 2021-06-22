@@ -34,10 +34,8 @@ modules:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DREPRODUCIBLE_BUILD=ON
     sources:
-      - type: git
-        url: https://github.com/dhewm/dhewm3
-        branch: master
-        commit: aedf0b4b21d3235a0f0a03334b08fc51539cfb00
+      - type: dir
+        path: dhewm3
       - type: shell
         commands:
           - mv ./neo/* ./
