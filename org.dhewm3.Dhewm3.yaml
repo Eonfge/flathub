@@ -34,8 +34,10 @@ modules:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DREPRODUCIBLE_BUILD=ON
     sources:
-      - type: dir
-        path: dhewm3
+      - type: git
+        url: https://github.com/DanielGibson/dhewm3
+        branch: fix-idStr-crashes
+        commit: d09b7b69d26fb6eadcf09e034523a24b3232fae4
       - type: shell
         commands:
           - mv ./neo/* ./
