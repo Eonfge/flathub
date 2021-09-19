@@ -1,0 +1,36 @@
+app-id: com.github.jesseduffield.Lazydocker
+runtime: org.freedesktop.Platform
+sdk: org.freedesktop.Sdk
+runtime-version: "21.08"
+command: lazydocker
+
+finish-args:
+- --device=dri
+- --socket=wayland
+- --socket=fallback-x11
+- --share=ipc
+- --share=network
+
+# Docker's socket
+- --filesystem=/var/run/host/docker.sock
+- --env=DOCKER_HOST=/var/run/host/docker.sock
+
+cleanup:
+- /app/include
+- /app/lib/*.a
+- /app/lib/*.la
+- /app/lib/pkgconfig
+
+modules:
+
+- name: lazydocker
+  buildsystem: simple
+  build-commands:
+    - tar -xf lazydocker.tar.gz
+    - install -Dm 755 ./lazydocker /app/bin/lazydocker
+  sources:
+  - type: file
+    dest-filename: lazydocker.tar.gz
+    url: https://github.com/jesseduffield/lazydocker/releases/download/v0.12/lazydocker_0.12_Linux_x86_64.tar.gz
+    sha256: a52d6e33aceb88099ccecca76fce1122a0bda29aae704c1a727a98379d0271fc
+
