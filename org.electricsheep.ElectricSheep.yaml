@@ -1,0 +1,111 @@
+app-id: org.electricsheep.ElectricSheep
+runtime: org.freedesktop.Platform
+sdk: org.freedesktop.Sdk
+runtime-version: '21.08'
+command: electricsheep
+
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --share=network
+
+cleanup:
+  - /man
+  - /include
+  - /share/man
+  - /share/doc
+  - /lib/*.a
+  - /lib/*.la
+
+modules:
+
+# Required so we can use wxWidgets with openGL integration
+  - shared-modules/glu/glu-9.json
+  - shared-modules/glew/glew.json
+  - shared-modules/gtk2/gtk2.json
+  
+# Build wxWidgets using git to include submodules
+# This is the last feature-release that Electric Sheep seems to care about
+  - name: wxwidgets
+    buildsystem: autotools
+    #disabled: true
+    config-opts:
+      - --with-gtk=3
+      - --disable-sdltest
+      - --enable-shared
+      - --enable-webview
+      - --enable-webviewwebkit
+      - --with-opengl
+      - --with-sdl
+      - --with-libiconv=/usr
+    sources:
+      - type: git
+        url: https://github.com/wxWidgets/wxWidgets
+        tag: v2.9.5
+        commit: 09a2f01903f7095cb119500809e5927f1fabc814
+
+  - shared-modules/lua5.1/lua-5.1.5.json
+
+  - name: flam
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/scottdraves/flam3.git
+        branch: master
+        commit: 7fb50c82e90e051f00efcc3123d0e06de26594b2
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -f -i
+
+  - name: libgtop
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/libgtop/2.40/libgtop-2.40.0.tar.xz
+        sha256: 78f3274c0c79c434c03655c1b35edf7b95ec0421430897fb1345a98a265ed2d4
+
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-toolset=gcc --with-libraries=thread,filesystem,system
+      - ./b2  variant=release -j $FLATPAK_BUILDER_N_JOBS install
+    sources:
+      - type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.bz2
+        sha256: 475d589d51a7f8b3ba2ba4eda022b170e562ca3b760ee922c146b6c65856ef39
+        x-checker-data:
+          type: anitya
+          project-id: 6845
+          stable-only: true
+          url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
+
+  - name: tinyxml
+    buildsystem: simple
+    build-commands:
+      - OUTPUT=libtinyxml make
+      - install -Dm744 tinyxml.o /app/lib
+      - install -Dm744 tinyxmlparser.o /app/lib
+      - install -Dm744 xmltest.o /app/lib
+      - install -Dm744 tinyxmlerror.o /app/lib
+      - install -Dm744 tinystr.o /app/lib
+    sources:
+      - type: archive
+        url: https://sourceforge.net/projects/tinyxml/files/tinyxml/2.6.2/tinyxml_2_6_2.tar.gz
+        sha256: 15bdfdcec58a7da30adc87ac2b078e4417dbe5392f3afb719f9ba6d062645593
+
+  - name: sheep
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/scottdraves/electricsheep
+        branch: master
+        commit: 37ba0fd692d6581f8fe009ed11c9650cd8174123
+      - type: shell
+        commands:
+          # Main code is one level down
+          - mv ./client_generic/* ./
+          # Update config
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -f -i
