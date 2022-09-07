@@ -21,6 +21,15 @@ cleanup:
   - /app/lib/*.a
   - /app/lib/*.la
   - /app/lib/pkgconfig
+ 
+  
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.llvm12
+  
+build-options:
+  prefix: /usr/lib/sdk/ldc
+  prepend-path: /usr/lib/sdk/llvm12/bin
+  prepend-ld-library-path: /usr/lib/sdk/llvm12/lib
 
 modules:
 
@@ -28,29 +37,20 @@ modules:
   - shared-modules/glu/glu-9.json
   - shared-modules/glew/glew.json
 
+  # Dependency that vcpkg is trying to reel in
+  # https://github.com/cemu-project/Cemu/tree/main/dependencies/vcpkg_overlay_ports/wxwidgets
   - name: wxwidgets
     buildsystem: autotools
-    config-opts:
-      - --with-gtk=3
-      - --disable-sdltest
-      - --enable-shared
-      - --enable-webview
-      - --enable-webviewwebkit
-      - --with-opengl
-      - --with-sdl
-      - --with-libiconv=/usr
     sources:
       - type: git
         url: https://github.com/wxWidgets/wxWidgets
-        tag: v3.1.5
-        commit: 9c0a8be1dc32063d91ed1901fd5fcd54f4f955a1
+        tag: v3.2.0
+        commit: 5b5ec3804a31a3765d60ff351bbdf79eddb1e1f9
         x-checker-data:
           type: anitya
           project-id: 5150
           stable-only: true
           tag-template: v$version
-          versions:
-            <: '3.1.6'
 
   # Dependency that vcpkg is trying to reel in
   # https://github.com/cemu-project/Cemu/tree/main/dependencies/vcpkg_overlay_ports/fmt
@@ -83,13 +83,14 @@ modules:
       prepend-path: /usr/lib/sdk/llvm12/bin
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-      - -G Ninja
-      - -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja
-      - -DCMAKE_C_COMPILER=/usr/bin/clang-12
-      - -DCMAKE_CXX_COMPILER=/usr/bin/clang++-12
+      - -DENABLE_VCPKG=false
     sources:
       - type: git
         url: https://github.com/cemu-project/Cemu
-        tag: v2.0
-        commit: 80ce0c9a46766e016daee5055d927513436caa84
+        tag: v2.0-1
+        commit: e5d7d5d1736019d08e1ff8d9bd2e385330c5b7de
+      - type: git
+        dest: 3rdparty/imgui/imgui
+        url: https://github.com/ocornut/imgui.git
+        commit: 60bea052a92cbb4a93b221002fdf04f0da3698e1
   
